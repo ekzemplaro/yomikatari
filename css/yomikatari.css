@@ -1,0 +1,22 @@
+table.main,td,th {
+table-layout:fixed;
+border:1.5px #ff00ff solid;
+/*
+width: 200px;
+*/
+height: 16px;
+}
+table.tag {
+border:0.5px green solid;
+}
+
+/*
+td.no,th.no { width: 40px; }
+td.check,th.check { width: 50px; }
+td.code,th.code { width: 60px; }
+*/
+tr.cyan {
+	background-color: #c7d7c7;
+}
+
+.red {color:#ff0000;}

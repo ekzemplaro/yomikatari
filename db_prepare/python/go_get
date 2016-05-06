@@ -1,0 +1,10 @@
+#
+URL=http://localhost:5984/yomikatari
+#
+for key in ye2016040111  ye2016040121 ye2016040131 \
+	ye2016040141  ye2016040151 ye2016040161
+do
+	wget $URL/$key
+	mv $key $key".json"
+done
+#

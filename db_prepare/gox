@@ -1,0 +1,11 @@
+#
+curl -X PUT http://localhost:5984/yomikatari
+#
+#
+for key in e10000 e10001 e10002 e10003 \
+	e10004 e10005 e10006 e10007 \
+	e10008 e10009
+do
+	curl -X PUT http://localhost:5984/yomikatari/$key -d@$key".json"
+done
+

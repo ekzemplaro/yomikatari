@@ -1,14 +1,13 @@
 // -----------------------------------------------------------------------
 //	yomikatari/data_input/data_input.js
 //
-//					May/06/2016
+//					May/11/2016
 //
 // -----------------------------------------------------------------------
 jQuery (function ()
 {
 	jQuery("#outarea_aa").html
-		("*** data_input *** start *** May/06/2016 ***");
-
+		("*** data_input *** start *** May/11/2016 ***");
 
 	var json_in = "../conf/number_of_classes.json";
 
@@ -29,11 +28,12 @@ jQuery (function ()
 		});
 
 	jQuery("#outarea_hh").html
-		("*** data_input *** end *** May/06/2016 ***");
+		("*** data_input *** end *** May/11/2016 ***");
 
 });
 
 // -----------------------------------------------------------------------
+// [4]:
 function display_main_proc (number_of_classes)
 {
 	var url_python = "python_proxy_get.py";
@@ -46,17 +46,29 @@ function display_main_proc (number_of_classes)
 
 	jQuery.post (url_python,args,function (res)
 		{
-		var str_out = table_gen_proc (number_of_classes,res.rows);
+		display_s2_proc (number_of_classes,res.rows);
 
-		jQuery(".contents").html (str_out);
-
-		click_monitor ();
+		jQuery (".filter").change (function ()
+               		{
+			display_s2_proc (number_of_classes,res.rows);
+			});
 		});
 }
 
 // -----------------------------------------------------------------------
+// [4-2]:
+function display_s2_proc (number_of_classes,rows_in)
+{
+	var str_out = table_gen_proc (number_of_classes,rows_in);
+
+	jQuery(".contents").html (str_out);
+
+	click_monitor (rows_in);
+}
+
+// -----------------------------------------------------------------------
 // [8]:
-function click_monitor ()
+function click_monitor (rows_in)
 {
 	jQuery ("button.execute").on ('click', function ()
 		{
@@ -74,6 +86,8 @@ function click_monitor ()
 		jQuery("#outarea_dd").text (str_json);
 
 		couchdb_update_proc (key,data_out);
+
+		rows_update_proc (rows_in,key,data_out);
 		});
 }
 
@@ -109,6 +123,42 @@ function couchdb_update_proc (key,data_out)
 			}
 	jQuery("#message").html (out_str);
 		});
+}
+
+// -----------------------------------------------------------------------
+function rows_update_proc (rows_in,key,data_out)
+{
+	var out_str =  "*** outarea_cc ***<br />";
+	out_str +=  "*** rows_update_proc *** start ***<br />";
+
+	out_str +=  "key = " + key + "<br />";
+	out_str +=  "rows_in.length = " + rows_in.length + "<br />";
+
+	for (var it in rows_in)
+		{
+		if (rows_in[it].key === key)
+			{
+			out_str += "it = " + it + "<br />";
+			var doc = rows_in[it].doc;
+			out_str += "title[0] = " + doc.books[0].title + "<br />";
+			out_str += "title[1] = " + doc.books[1].title + "<br />";
+			out_str += "new title[0] = " + data_out.books[0].title + "<br />";
+			out_str += "new title[1] = " + data_out.books[1].title + "<br />";
+
+			doc.books[0].title = data_out.books[0].title;
+			doc.books[1].title = data_out.books[1].title;
+
+			for (var jt=0; jt<3; jt+= 1)
+				{
+				doc.books[0].authors[jt] = data_out.books[0].authors[jt];
+				doc.books[1].authors[jt] = data_out.books[1].authors[jt];
+				}
+			}
+		}
+
+	out_str +=  "*** rows_update_proc *** end ***<br />";
+
+	jQuery("#outarea_cc").html (out_str);
 }
 
 // -----------------------------------------------------------------------

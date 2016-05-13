@@ -5,23 +5,19 @@
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8" />
 <script src="/js/jquery-2.2.3.min.js"></script>
-<script src="yomikatari.js"></script>
-<script src="filter.js"></script>
-<script src="display_table_gen.js"></script>
-<script src="yomikatari_common.js"></script>
-<link rel="stylesheet" href="css/yomikatari.css">
-<title>yoikatari (May/13/2016)</title>
+<script src="data_delete.js"></script>
+<script src="delete_table_gen.js"></script>
+<script src="../filter.js"></script>
+<script src="../yomikatari_common.js"></script>
+<link rel="stylesheet" href="../css/yomikatari.css">
+<title>yoikatari delete (May/13/2016)</title>
 </head>
 <body>
-<h1>読み語りデータベース</h1>
+<h1>読み語りデータベース 削除</h1>
 <blockquote>
 <span class="red">現在のデータは、テストデータです。</span><p />
 </blockquote>
-<blockquote>
-<a href="show_all">show_all</a> データベースの確認<p />
-<a href="data_input">data_inut</a> データの入力<p />
-<a href="data_delete">data_delete</a> データの削除<p />
-</blockquote>
+<button class="execute"  id="execute">実行</button>
 <hr />
 <select class="filter" id="school" name="school">
 <option selected>学校　総て</option>

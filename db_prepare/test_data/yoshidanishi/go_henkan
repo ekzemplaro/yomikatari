@@ -1,0 +1,3 @@
+jq . $1 > tmp001
+awk  '!/_rev/{print $0}' tmp001 > tmp002
+mv tmp002 $1

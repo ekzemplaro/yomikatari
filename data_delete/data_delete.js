@@ -1,13 +1,13 @@
 // -----------------------------------------------------------------------
 //	yomikatari/data_delete/data_delete.js
 //
-//					May/13/2016
+//					May/17/2016
 //
 // -----------------------------------------------------------------------
 jQuery (function ()
 {
 	jQuery("#outarea_aa").html
-		("*** data_delete *** start *** May/13/2016 ***");
+		("*** data_delete *** start *** May/17/2016 ***");
 
 	var data_text = "";
 
@@ -30,12 +30,12 @@ jQuery (function ()
 		});
 
 	jQuery("#outarea_hh").html
-		("*** data_delete *** end *** May/13/2016 ***");
+		("*** data_delete *** end *** May/17/2016 ***");
 
 });
 
 // -----------------------------------------------------------------------
-// [2]:
+// [4]:
 function display_delete_proc (res)
 {
 	var school_selected = jQuery ("#school").val ();
@@ -59,6 +59,7 @@ function display_delete_proc (res)
 }
 
 // -----------------------------------------------------------------------
+// [4-6]:
 function click_monitor (rows_filtered)
 {
 
@@ -80,10 +81,13 @@ function click_monitor (rows_filtered)
 
 		couchdb_delete_proc (id_rev_delete);
 
+		rows_filtered_clear_proc (rows_filtered,id_rev_delete);
+
 		});
 }
 
 // -----------------------------------------------------------------------
+// [4-6-4]:
 function couchdb_delete_proc (id_rev_delete)
 {
 	var str_tmp = "";
@@ -122,3 +126,54 @@ function couchdb_delete_proc (id_rev_delete)
 }
 
 // -----------------------------------------------------------------------
+// [4-6-8]:
+function rows_filtered_clear_proc (rows_filtered,id_rev_delete)
+{
+	var str_tmp = "*** rows_filtered_clear_proc ***<br />";
+	str_tmp += "rows_filtered.length = " + rows_filtered.length + "<br />";
+	str_tmp += "id_rev_delete.length = " + id_rev_delete.length + "<br />";
+
+	var rows_new = [];
+
+	for (var jt in rows_filtered)
+		{ 
+		var id_aa = rows_filtered[jt].key;
+
+		if (hantei_proc (id_aa,id_rev_delete))
+			{
+			rows_new.push (rows_filtered[jt]);
+			}
+		}
+
+	str_tmp += "rows_new.length = " + rows_new.length + "<br />";
+
+	jQuery("#outarea_dd").html (str_tmp);
+
+	var str_out = delete_table_gen_proc (rows_new);
+
+	jQuery(".contents").html (str_out);
+
+	click_monitor (rows_new);
+}
+
+// -----------------------------------------------------------------------
+function hantei_proc (id_aa,id_rev_delete)
+{
+	var hantei = true;
+
+	for (var it in id_rev_delete)
+		{
+		var key = id_rev_delete[it][0];
+
+		if (id_aa === key)
+			{
+			hantei = false;
+			}
+		}
+
+
+	return	hantei;
+}
+
+// -----------------------------------------------------------------------
+
